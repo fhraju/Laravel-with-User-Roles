@@ -1,6 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +24,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/login/custom', [LoginController::class, 'loginCustom'])->name('login.custom');
+
+// user routes
+Route::group(['middleware' => ['role:user']], function () {
+    Route::get('/user/home', [UserController::class, 'home'])->name('user.home');
+});
+
+// admin routes
+Route::group(['middleware' => ['role:admin']], function () {
+    Route::get('/admin/home', [AdminController::class, 'home'])->name('admin.home');
+});

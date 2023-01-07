@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -36,5 +38,23 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function loginCustom(Request $request)
+    {
+        if (auth()->attempt([
+            'email' => $request->email,
+            'password' => $request->password,
+        ]))
+        {
+            $user = User::where('email', $request->email)->first();
+
+            if ($user->hasRole('admin'))
+            {
+                return redirect()->route('admin.home');
+            }elseif ($user->hasRole('user')) {
+                return redirect()->route('user.home');
+            }
+        }
     }
 }
