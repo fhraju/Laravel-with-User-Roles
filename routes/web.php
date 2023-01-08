@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\VerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,12 +26,27 @@ Auth::routes();
 
 Route::post('/login/custom', [LoginController::class, 'loginCustom'])->name('login.custom');
 
+//email verification
+Route::middleware('auth')->controller(VerificationController::class)->prefix('email')
+->name('verification.')->group(function () {
+
+    // verification notice
+    Route::get('/verify', 'notice')->name('notice');
+
+    // verification Handler
+    Route::get('/verify/{id}/{hash}', 'verificationHandler')->middleware('signed')->name('verify');
+
+    // Resend verification
+    Route::post('/verification-notification', 'verificationResend')->middleware('throttle:6,1')->name('resend');
+
+});
+
 // user routes
-Route::group(['middleware' => ['role:user']], function () {
+Route::middleware([ 'auth', 'verified', 'role:user|admin'])->group(function () {
     Route::get('/user/home', [UserController::class, 'home'])->name('user.home');
 });
 
 // admin routes
-Route::group(['middleware' => ['role:admin']], function () {
+Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/admin/home', [AdminController::class, 'home'])->name('admin.home');
 });
