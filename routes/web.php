@@ -3,9 +3,12 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\AdminController;
+
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\AdminControllers\AdminController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +50,10 @@ Route::middleware([ 'auth', 'verified', 'role:user|admin'])->group(function () {
 });
 
 // admin routes
-Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
-    Route::get('/admin/home', [AdminController::class, 'home'])->name('admin.home');
+Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')
+->name('admin.')->group(function () {
+    Route::get('/home', [AdminController::class, 'home'])->name('home');
 });
+
+// Category Routes
+Route::resource('/categories', CategoryController::class);
