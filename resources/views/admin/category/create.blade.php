@@ -1,3 +1,5 @@
+@extends('admin.layouts.main')
+@section('content')
 <h4>Add Category</h4>
 
 <div class="container">
@@ -6,7 +8,7 @@
             <div class="card">
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('categories.store') }}">
+                    <form method="POST" action="{{ route('admin.categories.store') }}">
                         @csrf
 
                         <div class="row mb-3">
@@ -53,3 +55,4 @@
         </div>
     </div>
 </div>
+@endsection

@@ -15,7 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('category.index', );
+        $categories = Category::all();
+
+        return view('admin.category.index', ['categories' => $categories]);
     }
 
     /**
@@ -25,7 +27,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('category.create');
+        return view('admin.category.create');
     }
 
     /**
@@ -43,7 +45,7 @@ class CategoryController extends Controller
 
         Category::create($categoryFields);
 
-        return redirect()->route('categories.index');
+        return redirect()->route('admin.categories.index');
         
     }
 
@@ -55,7 +57,8 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        // $category = Category::where('name', $id);
+        return view('admin.category.show');
     }
 
     /**

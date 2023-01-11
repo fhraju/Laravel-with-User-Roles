@@ -53,7 +53,7 @@ Route::middleware([ 'auth', 'verified', 'role:user|admin'])->group(function () {
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')
 ->name('admin.')->group(function () {
     Route::get('/home', [AdminController::class, 'home'])->name('home');
-});
 
-// Category Routes
-Route::resource('/categories', CategoryController::class);
+    // Category Routes
+    Route::resource('/categories', CategoryController::class);
+});
