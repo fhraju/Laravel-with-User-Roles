@@ -42,10 +42,12 @@ class LoginController extends Controller
 
     public function loginCustom(Request $request)
     {
-        if (auth()->attempt([
-            'email' => $request->email,
-            'password' => $request->password,
-        ]))
+        $formFields = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => 'required'
+        ]);
+
+        if (auth()->attempt($formFields))
         {
             $user = User::where('email', $request->email)->first();
 
@@ -57,5 +59,6 @@ class LoginController extends Controller
                 return redirect()->route('user.home');
             }
         }
+        return back()->withErrors(['email'=> 'Invalid Credentials'])->onlyInput('email');
     }
 }
