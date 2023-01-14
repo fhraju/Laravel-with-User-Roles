@@ -32,6 +32,16 @@ class AdminController extends Controller
         }
         return back()->withErrors(['email'=> 'Invalid Credentials'])->onlyInput('email');
     }
+
+    // Admin Logout
+    public function logout(Request $request)
+    {
+        auth()->logout();
+
+        $request->session()->invalidate();
+
+        return redirect('/admin/login')->with('message', 'You have been logged out Successfully');
+    }
     
     public function home (Request $request)
     {

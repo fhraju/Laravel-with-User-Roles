@@ -58,6 +58,8 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')
 ->name('admin.')->group(function () {
     Route::get('/home', [AdminController::class, 'home'])->name('home');
 
+    Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
+
     // Category Routes
     Route::resource('/categories', CategoryController::class);
 });
