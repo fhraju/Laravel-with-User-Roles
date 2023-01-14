@@ -40,25 +40,4 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function loginCustom(Request $request)
-    {
-        $formFields = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => 'required'
-        ]);
-
-        if (auth()->attempt($formFields))
-        {
-            $user = User::where('email', $request->email)->first();
-
-            if ($user->hasRole('admin'))
-            {
-                return redirect()->route('admin.home');
-            }
-            elseif ($user->hasRole('user')) {
-                return redirect()->route('user.home');
-            }
-        }
-        return back()->withErrors(['email'=> 'Invalid Credentials'])->onlyInput('email');
-    }
 }

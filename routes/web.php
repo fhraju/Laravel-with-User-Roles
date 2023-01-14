@@ -27,7 +27,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::post('/login/custom', [LoginController::class, 'loginCustom'])->name('login.custom');
+Route::get('/user/home', [UserController::class, 'home'])->name('user.home');
 
 //email verification
 Route::middleware('auth')->controller(VerificationController::class)->prefix('email')
@@ -44,12 +44,16 @@ Route::middleware('auth')->controller(VerificationController::class)->prefix('em
 
 });
 
-// user routes
-Route::middleware([ 'auth', 'verified', 'role:user|admin'])->group(function () {
-    Route::get('/user/home', [UserController::class, 'home'])->name('user.home');
-});
 
 // admin routes
+
+// Login
+Route::prefix('admin')->group( function () {
+    Route::get('/login', [AdminController::class, 'showLoginForm']);
+    Route::post('/login', [AdminController::class, 'login']);
+});
+
+
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')
 ->name('admin.')->group(function () {
     Route::get('/home', [AdminController::class, 'home'])->name('home');

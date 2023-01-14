@@ -1,58 +1,35 @@
 @extends('admin.layouts.main')
+
 @section('content')
-<h4>Add Category</h4>
 
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('admin.categories.store') }}">
-                        @csrf
-
-                        <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="status" class="col-md-4 col-form-label text-md-end">{{ __('Choose a Status') }}</label>
-
-                            <div class="col-md-6 ">
-                                <select name="status" id="status">
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
-                                </select>
-
-                                @error('status')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row my-3">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Add Category') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+    <div class="card card-primary">
+        <div class="card-header">
+        <h3 class="card-title">Add Category</h3>
         </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form method="POST" action="{{ route('admin.categories.store') }}">
+            @csrf
+            <div class="card-body">
+                <div class="form-group">
+                <label for="name">Category Name *</label>
+                <input type="text" name="name" class="form-control" id="name" required placeholder="Enter Name">
+                </div>
+
+                <div class="form-group">
+                    <label for="category">SubCategory Of</label>
+                    <select class="form-control" name="category_id">
+                        <option value="">No Subcategory</option>
+                        @foreach ($categories as $category)
+                            <option value="{{$category->id}}">{{$category->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </div>
+            <!-- /.card-body -->
+        </form>
     </div>
 </div>
 @endsection

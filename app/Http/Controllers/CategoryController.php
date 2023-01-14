@@ -15,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::whereNull('category_id')->get();
 
         return view('admin.category.index', ['categories' => $categories]);
     }
@@ -27,7 +27,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.category.create');
+        $categories = Category::whereNull('category_id')->get();
+
+        return view('admin.category.create', ['categories' => $categories]);
     }
 
     /**
@@ -38,10 +40,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $categoryFields = $request->validate([
-            'name' => ['required', 'min:3', Rule::unique('categories', 'name')],
-            'status' => ['required'],
-        ]);
+        $categoryFields = [
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+        ];
 
         Category::create($categoryFields);
 
