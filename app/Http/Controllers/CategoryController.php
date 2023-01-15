@@ -15,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::whereNull('category_id')->get();
+        $categories = Category::where('status', '1')->get();
 
         return view('admin.category.index', ['categories' => $categories]);
     }
@@ -50,19 +50,6 @@ class CategoryController extends Controller
         return redirect()->route('admin.categories.index');
         
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        // $category = Category::where('name', $id);
-        return view('admin.category.show');
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -71,7 +58,10 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categories = Category::whereNull('category_id')->get();
+        $category = Category::find($id);
+
+        return view('admin.category.edit', ['categories'=>$categories, 'category'=>$category]);
     }
 
     /**
