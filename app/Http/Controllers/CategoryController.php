@@ -73,7 +73,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $category = Category::find($id);
+        $formFields = [
+                'name' => $request->name,
+                'category_id' => $request->category_id,
+        ];
+        $category->update($formFields);
+        return redirect()->route('admin.categories.index')->with('message', 'Category Updated Successfully');
     }
 
     /**
@@ -84,6 +90,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::find($id);
+        $category->delete();
+
+        return redirect()->route('admin.categories.index')->with('message', 'User deleted Successfully');
     }
 }

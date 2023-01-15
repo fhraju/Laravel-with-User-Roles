@@ -28,7 +28,9 @@
                         <span class="badge text-sm bg-info text-dark">{{ $permission->name }}</span>
                     @endforeach
                 </td>
-                <td><a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-primary">Edit</a></td>
+                <td><a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-primary">
+                    <i class="fa fa-edit"></i>
+                    Edit</a></td>
                 <td>
                     <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST">
                         @csrf

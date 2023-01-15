@@ -29,12 +29,12 @@
                         selected   
                         @endif
                         >No Subcategory</option>
-                        @foreach ($categories as $category)
-                            <option value="{{$category->id}}"
-                                @if ($category->category_id != null && $category->category_id == $categorie->id )
+                        @foreach ($categories as $categori)
+                            <option value="{{$categori->id}}"
+                                @if ($category->category_id != null && $category->category_id == $categori->id )
                                     selected
                                 @endif
-                                >{{$category->name}}</option>
+                                >{{$categori->name}}</option>
                         @endforeach
                     </select>
                 </div>

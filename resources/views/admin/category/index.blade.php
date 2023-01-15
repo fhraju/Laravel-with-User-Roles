@@ -28,11 +28,14 @@
                     @endif
                 </td>
                 <td>{{ $categorie->created_at }}</td>
-                <td><a href="{{ route('admin.categories.edit', $categorie->id) }}" class="btn btn-primary">Edit</a></td>
+                <td><a href="{{ route('admin.categories.edit', $categorie->id) }}" class="btn btn-primary">
+                    <i class="fa fa-edit"></i>
+                    Edit</a></td>
                 <td>
-                    <form action="{{ route('admin.users.destroy', $categorie->id) }}" method="POST">
+                    <form action="{{ route('admin.categories.destroy', $categorie->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
+                        
                         <input type="submit" class="btn btn-danger" onclick="return confirm('Are you Sure')" value="Delete">
                     </form>
                 </td>

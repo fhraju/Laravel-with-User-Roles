@@ -70,7 +70,7 @@
                                     @foreach ($permissions as $permission)
                                         <option value="{{ $permission->id }}" 
                                             @if ($user->hasPermissionTo($permission->id))
-                                                selected="selected"
+                                                selected
                                             @endif
                                         >
                                             {{ $permission->name }}</option>
