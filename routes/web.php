@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\AdminControllers\AdminController;
+use App\Http\Controllers\AdminControllers\UsersController;
 
 
 /*
@@ -59,6 +60,9 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')
     Route::get('/home', [AdminController::class, 'home'])->name('home');
 
     Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
+
+    // SuperUsers Routes
+    Route::resource('/users', UsersController::class);
 
     // Category Routes
     Route::resource('/categories', CategoryController::class);
