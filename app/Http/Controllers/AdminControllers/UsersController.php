@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
 {
@@ -32,9 +33,9 @@ class UsersController extends Controller
      */
     public function create()
     {
-        $permissions = Permission::all();
+        $roles = Role::all();
 
-        return view('admin.users.create', ['permissions' => $permissions]);
+        return view('admin.users.create', ['roles' => $roles]);
     }
 
     /**
@@ -61,22 +62,11 @@ class UsersController extends Controller
         $user->email_verified_at = Carbon::now();
         $user->save();
 
-        // Give permissions
-        $user->syncPermissions($request->permission, []);
+        // Give roles
+        $user->syncRoles($request->role);
 
         return redirect('/admin/users')->with('message', 'User Created Successfully');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    // public function show($id)
-    // {
-    //     //
-    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -87,9 +77,9 @@ class UsersController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $permissions = Permission::all();
+        $roles = Role::all();
 
-        return view('admin.users.edit', ['user'=>$user, 'permissions'=>$permissions]);
+        return view('admin.users.edit', ['user'=>$user, 'roles'=>$roles]);
     }
 
     /**
@@ -119,8 +109,8 @@ class UsersController extends Controller
         $user->email_verified_at = Carbon::now();
         $user->save();
 
-        // Give permissions
-        $user->syncPermissions($request->permission, []);
+        // Give roles
+        $user->syncRoles($request->role);
 
         return redirect('/admin/users')->with('message', 'User Updated Successfully');
     }
@@ -138,8 +128,8 @@ class UsersController extends Controller
             abort('403', "You can't delete Admin account");
         }else {
             $user->delete();
-            $user->revokePermissionTo($user->permission);
+            // $user->removeRole($user->role);
         }
-        return redirect('admin.users.index')->with('message', 'User deleted Successfully');
+        return redirect()->route('admin.users.index')->with('message', 'User deleted Successfully');
     }
 }

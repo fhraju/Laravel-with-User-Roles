@@ -35,11 +35,11 @@
         <!-- Add icons to the links using the .nav-icon class
           with font-awesome or any other icon font library -->
           {{-- Users Module --}}
-          <li class="nav-item menu-active">
+          <li class="nav-item menu">
             <a href="{{ route('admin.users.index') }}" class="nav-link">
-              <i class="fa fa-users"></i>
+              <i class="nav-icon fa fa-users"></i>
               <p>
-                Users Manager
+                User Manager
               </p>
             </a>
           </li>
@@ -53,34 +53,13 @@
               </a>
             </li>
 
-          <li class="nav-item menu-open">
+          <li class="nav-item menu">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
-                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v1</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v2</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v3</p>
-                </a>
-              </li>
-            </ul>
           </li>
           
         </ul>

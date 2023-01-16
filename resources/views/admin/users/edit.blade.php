@@ -63,17 +63,17 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="permissions" class="col-md-4 col-form-label text-md-end">{{ __('Select Permission') }}</label>
+                            <label for="Role" class="col-md-4 col-form-label text-md-end">{{ __('Select Role') }}</label>
 
                             <div class="col-md-6">
-                                <select class="form-control" name="permission[]" multiple>
-                                    @foreach ($permissions as $permission)
-                                        <option value="{{ $permission->id }}" 
-                                            @if ($user->hasPermissionTo($permission->id))
+                                <select class="form-control" name="role">
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->id }}" 
+                                            @if ($user->getRoleNames($role->id))
                                                 selected
                                             @endif
                                         >
-                                            {{ $permission->name }}</option>
+                                            {{ $role->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

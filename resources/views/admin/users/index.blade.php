@@ -12,7 +12,7 @@
                 <th scope="col">Id</th>
                 <th scope="col">Name</th>
                 <th scope="col">email</th>
-                <th scope="col">Permissions</th>
+                <th scope="col">Role</th>
                 <th scope="col">Edit</th>
                 <th scope="col">Delete</th>
             </tr>
@@ -24,9 +24,11 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>
-                    @foreach ($user->getDirectPermissions(); as $permission)
-                        <span class="badge text-sm bg-info text-dark">{{ $permission->name }}</span>
-                    @endforeach
+                    @if ($user->getRoleNames())
+                        @foreach ($user->getRoleNames(); as $role)
+                            <span class="badge text-sm bg-info text-dark">{{ $role }}</span>
+                        @endforeach
+                    @endif
                 </td>
                 <td><a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-primary">
                     <i class="fa fa-edit"></i>
